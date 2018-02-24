@@ -19,6 +19,8 @@ int main(int argc, char** argv)
 
 	const auto texture = VisualFlux::readImage("Data/Textures/1_orb.png");
 
+	printf("Test");
+
 	while (true) 
 	{
 		// window->draw();
