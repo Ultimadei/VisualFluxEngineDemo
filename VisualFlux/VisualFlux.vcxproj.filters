@@ -56,5 +56,8 @@
     <ClInclude Include="Include\VisualFlux\OpenGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\VisualFlux\ResourceCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -189,12 +189,6 @@ namespace VisualFlux
 			delete spriteVertices;
 		}
 
-		/*Vertex vertices[] = {
-			Vertex(Position(-0.5f, -0.5f), Color(0, 0, 1, 255)),
-			Vertex(Position(-0.5f, 0.5f), Color(1, 0, 0, 255)),
-			Vertex(Position(0.5f, -0.5f), Color(0, 1, 0, 255))
-		};*/
-
 		glBindVertexArray(_vao);
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 		glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), nullptr, GL_STREAM_DRAW);

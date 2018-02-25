@@ -3,33 +3,37 @@
 #include <VisualFlux/OpenGL.h>
 #include <VisualFlux/Vertex.h>
 
-class Sprite {
-public:
-	enum class CollisionType {
-		TRIANGLE,
-		RECTANGLE,
-		CIRCLE
-	} const collisionType;
+namespace VisualFlux {
 
-	enum class RenderType {
-		TRIANGLE,
-		RECTANGLE
-	} const renderType;
+	class Sprite {
+	public:
+		enum class CollisionType {
+			TRIANGLE,
+			RECTANGLE,
+			CIRCLE
+		} const collisionType;
 
-	Sprite(
-		Position position,
-		Color color,
-		float width, float height, 
-		GLuint texture, 
-		CollisionType collisionType, RenderType renderType
-	);
-	virtual ~Sprite();
+		enum class RenderType {
+			TRIANGLE,
+			RECTANGLE
+		} const renderType;
 
-	GLuint texture;
-	Vertex** generateVertices();
-private:
-	Position _position;
-	Color _color;
-	float _width, _height;
-	
-};
+		Sprite(
+			Position position,
+			Color color,
+			float width, float height,
+			GLuint texture,
+			CollisionType collisionType, RenderType renderType
+		);
+		virtual ~Sprite();
+
+		GLuint texture;
+		Vertex** generateVertices();
+	private:
+		Position _position;
+		Color _color;
+		float _width, _height;
+
+	};
+
+}

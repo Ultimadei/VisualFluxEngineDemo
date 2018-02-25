@@ -1,9 +1,13 @@
 #include <VisualFlux/Window.h>
 #include <VisualFlux/fileIO.h>
+#include <VisualFlux/ResourceCache.h>
+#include <VisualFlux/Vertex.h>
 
 #include <conio.h>
 
 extern "C" { _declspec(dllexport) unsigned int NvOptimusEnablement = 0x00000001; }
+
+using namespace VisualFlux;
 
 VisualFlux::Window* window;
 
@@ -17,9 +21,9 @@ int main(int argc, char** argv)
 	float time = 0;
 	init();
 
-	const auto texture = VisualFlux::readImage("Data/Textures/1_orb.png");
+	auto textureCache = VisualFlux::ResourceCache<VisualFlux::Texture, std::string>();
 
-	printf("Test");
+	const auto texture = textureCache.getCachedResource("Data/Textures/1_orb.png", VisualFlux::readImage("Data/Textures/1_orb.png"));
 
 	while (true) 
 	{
@@ -28,8 +32,8 @@ int main(int argc, char** argv)
 		window->addSprite(Sprite(Position(-1.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f, 1.0f, texture.id, Sprite::CollisionType::TRIANGLE, Sprite::RenderType::RECTANGLE));
 		VisualFlux::Shader::Uniform uniforms[2] = 
 		{
-			VisualFlux::Shader::Uniform("time", VisualFlux::Shader::Uniform::Type::FLOAT1F, (float)time),
-			VisualFlux::Shader::Uniform("sampler", VisualFlux::Shader::Uniform::Type::INT1I, (int)0)
+			VisualFlux::Shader::Uniform("time", Shader::Uniform::Type::FLOAT1F, (float)time),
+			VisualFlux::Shader::Uniform("sampler", Shader::Uniform::Type::INT1I, (int)0)
 		};
 		window->draw(uniforms, 1);
 		time += 0.01f;

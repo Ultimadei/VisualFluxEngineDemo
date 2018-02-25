@@ -100,6 +100,7 @@
     <ClInclude Include="Include\VisualFlux\fileIO.h" />
     <ClInclude Include="Include\VisualFlux\OpenGL.h" />
     <ClInclude Include="Include\VisualFlux\picoPNG.h" />
+    <ClInclude Include="Include\VisualFlux\ResourceCache.h" />
     <ClInclude Include="Include\VisualFlux\Shader.h" />
     <ClInclude Include="Include\VisualFlux\Sprite.h" />
     <ClInclude Include="Include\VisualFlux\Vertex.h" />
