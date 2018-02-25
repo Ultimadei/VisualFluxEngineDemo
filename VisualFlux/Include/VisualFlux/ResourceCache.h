@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <map>
 
 namespace VisualFlux {
@@ -56,6 +57,7 @@ namespace VisualFlux {
 		}
 		else {
 			// The value was found, so return it.
+			printf("Cached texture has been used\n");
 			return iterator->second;
 		}
 	}
@@ -67,11 +69,13 @@ namespace VisualFlux {
 
 		if (iterator == _cacheMap.end()) {
 			// The value was not found under the key. Add it to the map
+			printf("Cached texture has been added\n");
 			_cacheMap.emplace(key, value);
 			return value;
 		}
 		else {
 			// The value was found, so return it.
+			printf("Cached texture has been used\n");
 			return iterator->second;
 		}
 	}
@@ -82,11 +86,13 @@ namespace VisualFlux {
 
 		if (iterator == _cacheMap.end()) {
 			// There was no value under the key, so we add it
+			printf("Cached texture has been added\n");
 			_cacheMap.emplace(key, value);
 		}
 		else {
 			if (replace) {
 				// There was a value found, but we are allowed to replace it
+				printf("Cached texture has been added\n");
 				iterator->second = value;
 			}
 			else {

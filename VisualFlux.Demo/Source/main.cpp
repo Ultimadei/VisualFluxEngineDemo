@@ -30,10 +30,10 @@ int main(int argc, char** argv)
 		// window->draw();
 		window->addSprite(Sprite(Position(0.0f, 0.0f), Color(0.0f, 0.0f, 1.0f, 1.0f), 1.0f, 1.0f, 0, Sprite::CollisionType::TRIANGLE, Sprite::RenderType::TRIANGLE));
 		window->addSprite(Sprite(Position(-1.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f, 1.0f, texture.id, Sprite::CollisionType::TRIANGLE, Sprite::RenderType::RECTANGLE));
-		VisualFlux::Shader::Uniform uniforms[2] = 
+		Shader::Uniform uniforms[2] = 
 		{
-			VisualFlux::Shader::Uniform("time", Shader::Uniform::Type::FLOAT1F, (float)time),
-			VisualFlux::Shader::Uniform("sampler", Shader::Uniform::Type::INT1I, (int)0)
+			Shader::Uniform("time", Shader::Uniform::Type::FLOAT1F, (float)time),
+			Shader::Uniform("sampler", Shader::Uniform::Type::INT1I, (int)0)
 		};
 		window->draw(uniforms, 1);
 		time += 0.01f;
