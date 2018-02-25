@@ -6,6 +6,7 @@
 #include <VisualFlux/Sprite.h>
 
 #include <vector>
+#include <unordered_map>
 
 namespace VisualFlux
 {
@@ -25,6 +26,13 @@ namespace VisualFlux
 		void draw();
 		void draw(Shader::Uniform uniformVariables[], int uniformCount);
 		void addSprite(Sprite sprite);
+
+		// Tells Window that a key has been pressed
+		void addKey(unsigned int key);
+		// Tells Window that a key has been released
+		void removeKey(unsigned int key);
+		// Retrieves a key status from the map
+		bool getKey(unsigned int key);
 	private:
 		const char* _title;
 		int _x, _y;
@@ -35,6 +43,9 @@ namespace VisualFlux
 		SDL_Window* _window;
 		std::vector<Sprite> _sprites;
 		std::vector<Vertex> _vertices;
+
+		// Map for all of the keyboard inputs the user gives to the window
+		std::unordered_map<unsigned int, bool> _keyboardInputs;
 
 		void _bindBuffers();
 	};

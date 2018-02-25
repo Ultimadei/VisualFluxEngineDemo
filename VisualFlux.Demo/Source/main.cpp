@@ -9,11 +9,11 @@ extern "C" { _declspec(dllexport) unsigned int NvOptimusEnablement = 0x00000001;
 
 using namespace VisualFlux;
 
-VisualFlux::Window* window;
+Window* window;
 
 void init() 
 {
-	window = new VisualFlux::Window("Title", 500, 200, 1024, 768, "Data/Shaders/color.vert", "Data/Shaders/color.frag", true, true);
+	window = new Window("Title", 500, 200, 1024, 768, "Data/Shaders/color.vert", "Data/Shaders/color.frag", true, true);
 }
 
 int main(int argc, char** argv) 
@@ -21,9 +21,9 @@ int main(int argc, char** argv)
 	float time = 0;
 	init();
 
-	auto textureCache = VisualFlux::ResourceCache<VisualFlux::Texture, std::string>();
+	auto textureCache = ResourceCache<Texture, std::string>();
 
-	const auto texture = textureCache.getCachedResource("Data/Textures/1_orb.png", VisualFlux::readImage("Data/Textures/1_orb.png"));
+	const auto texture = textureCache.getCachedResource("Data/Textures/1_orb.png", readImage("Data/Textures/1_orb.png"));
 
 	while (true) 
 	{
@@ -37,6 +37,22 @@ int main(int argc, char** argv)
 		};
 		window->draw(uniforms, 1);
 		time += 0.01f;
+
+		SDL_Event sdlEvent;
+		while (SDL_PollEvent(&sdlEvent)) {
+			switch (sdlEvent.type) {
+			case SDL_QUIT:
+				return 0;
+			case SDL_KEYDOWN:
+				window->addKey(sdlEvent.key.keysym.sym);
+				break;
+			case SDL_KEYUP:
+				window->removeKey(sdlEvent.key.keysym.sym);
+				break;
+			}
+		}
+
+
 	}
 	_getch();
 

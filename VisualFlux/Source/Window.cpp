@@ -80,6 +80,43 @@ namespace VisualFlux
 	{
 	}
 
+	void Window::_bindBuffers() {
+		for (int i = 0; i < _sprites.size(); i++) {
+			int vertexCount = 0;
+			switch (_sprites[i].renderType) {
+			case Sprite::RenderType::TRIANGLE:
+				vertexCount = 3;
+				break;
+			case Sprite::RenderType::RECTANGLE:
+				vertexCount = 6;
+				break;
+			}
+
+			Vertex** spriteVertices = _sprites[i].generateVertices();
+			for (int j = 0; j < vertexCount; j++) {
+				_vertices.push_back(*spriteVertices[j]);
+			}
+			for (int j = 0; j < vertexCount; j++) {
+				delete spriteVertices[j];
+			}
+			delete spriteVertices;
+		}
+
+		glBindVertexArray(_vao);
+		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+		glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), nullptr, GL_STREAM_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, _vertices.size() * sizeof(Vertex), _vertices.data());
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, position));
+		glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, color));
+		glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
+
 	void Window::draw() 
 	{
 		if (_sprites.size() == 0) { return; }
@@ -167,41 +204,23 @@ namespace VisualFlux
 		_sprites.push_back(sprite);
 	}
 
-	void Window::_bindBuffers() {
-		for (int i = 0; i < _sprites.size(); i++) {
-			int vertexCount = 0;
-			switch (_sprites[i].renderType) {
-			case Sprite::RenderType::TRIANGLE:
-				vertexCount = 3;
-				break;
-			case Sprite::RenderType::RECTANGLE:
-				vertexCount = 6;
-				break;
-			}
-
-			Vertex** spriteVertices = _sprites[i].generateVertices();
-			for (int j = 0; j < vertexCount; j++) {
-				_vertices.push_back(*spriteVertices[j]);
-			}
-			for (int j = 0; j < vertexCount; j++) {
-				delete spriteVertices[j];
-			}
-			delete spriteVertices;
-		}
-
-		glBindVertexArray(_vao);
-		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), nullptr, GL_STREAM_DRAW);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, _vertices.size() * sizeof(Vertex), _vertices.data());
-
-		glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, position));
-		glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, color));
-		glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, uv));
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+	void Window::addKey(unsigned int key) {
+		// Sets the value of the given key to true
+		_keyboardInputs[key] = true;
 	}
 
+	void Window::removeKey(unsigned int key) {
+		// Sets the value of the given key to false
+		_keyboardInputs[key] = false;
+	}
+
+	bool Window::getKey(unsigned int key) {
+		const auto iterator = _keyboardInputs.find(key);
+		if (iterator == _keyboardInputs.end()) {
+			return false;
+		}
+		else {
+			return iterator->second;
+		}
+	}
 }
