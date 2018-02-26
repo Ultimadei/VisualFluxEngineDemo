@@ -200,7 +200,7 @@ namespace VisualFlux
 		_vertices.clear();
 	}
 
-	void Window::addSprite(Sprite sprite) {
+	void Window::addSprite(const Sprite& sprite) {
 		_sprites.push_back(sprite);
 	}
 

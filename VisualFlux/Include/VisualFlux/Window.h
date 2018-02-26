@@ -25,7 +25,7 @@ namespace VisualFlux
 
 		void draw();
 		void draw(Shader::Uniform uniformVariables[], int uniformCount);
-		void addSprite(Sprite sprite);
+		void addSprite(const Sprite& sprite);
 
 		// Tells Window that a key has been pressed
 		void addKey(unsigned int key);

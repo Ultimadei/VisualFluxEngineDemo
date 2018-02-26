@@ -5,8 +5,7 @@
 
 namespace VisualFlux {
 
-	class Sprite {
-	public:
+	struct Sprite {
 		enum class CollisionType {
 			TRIANGLE,
 			RECTANGLE,
@@ -27,13 +26,14 @@ namespace VisualFlux {
 		);
 		virtual ~Sprite();
 
-		GLuint texture;
+		
 		Vertex** generateVertices();
-	private:
-		Position _position;
-		Color _color;
-		float _width, _height;
+		
 
+		Position position;
+		Color color;
+		float width, height;
+		GLuint texture;
 	};
 
 }
